@@ -1,5 +1,7 @@
 import { checkIngest } from "./ingest/ingest"
+import checkIfScrapeAllowed from "./safety/preCheck"
 import { clearScreen, truncate } from "./util/osFunctions"
+import { saveToDatabase, scrapeUrl } from "./util/scrape"
 import getRandomUrl from "./util/toScrape"
 import * as readline from "readline"
 
@@ -16,6 +18,7 @@ function promptUser(question: string): Promise<string> {
   })
 }
 
+clearScreen()
 checkIngest()
 console.log()
 
@@ -34,13 +37,25 @@ async function main() {
     console.log("│               NAVIGATE SCRAPER                │")
     console.log("├───────────────────────────────────────────────┤")
     console.log(`│ URL: ${truncate(url, { length: 40 })}... │`)
+    console.log("│ Pre-check: ", await checkIfScrapeAllowed(url) ? "Allowed" : "Blocked", "                          │")
     console.log("┢━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┪")
     console.log("┃       [S]crape         ┃         [Q]uit       ┃")
     console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┛\n")
 
     const input = await promptUser("> ")
     if (input === "s") {
-      console.log("I would scrape now...")
+      const { title, description, imageUrl, keywordsArray } = await scrapeUrl(url)
+
+      console.log(`\nTitle: ${title}`)
+      console.log(`Description: ${description}`)
+      console.log(`Image URL: ${imageUrl}`)
+      console.log(`Keywords: ${keywordsArray.join(", ")}\n`)
+
+      console.log("Save to database? (y/n)")
+      const save = await promptUser("> ")
+      if (save === "y") {
+        await saveToDatabase(url, title, description, imageUrl, keywordsArray)
+      }
     } else if (input === "q") {
       clearScreen()
       console.log("\nExiting...\n")

@@ -1,4 +1,4 @@
-import { integer, pgTable, varchar, timestamp } from "drizzle-orm/pg-core"
+import { integer, pgTable, varchar, timestamp, text } from "drizzle-orm/pg-core"
 
 export const scrapeQueue = pgTable("scrape_queue", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -13,6 +13,8 @@ export const searchData = pgTable("search_data", {
   url: varchar({ length: 255 }).notNull(),
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
+  imageUrl: varchar({ length: 255 }).notNull(),
+  keywords: text("text[]").array(),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
 })
