@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: abfi29239ed98q93aEa89EriiaKaye896quAirhaAu
+      POSTGRES_DB: scraper
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
