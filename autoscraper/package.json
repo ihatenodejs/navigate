@@ -1,0 +1,37 @@
+{
+  "name": "autoscraper",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://git.pontusmail.org/aidan/navigate"
+  },
+  "license": "Unlicense",
+  "author": "aidan",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/html-to-text": "^9.0.4",
+    "@types/mime-types": "^2.1.4",
+    "@types/pg": "^8.11.14",
+    "drizzle-kit": "^0.31.0",
+    "tsx": "^4.19.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
+    "html-to-text": "^9.0.5",
+    "mime-types": "^3.0.1",
+    "pg": "^8.15.6",
+    "robots-parser": "^3.0.1"
+  }
+}

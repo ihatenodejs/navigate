@@ -1,0 +1,16 @@
+# bun
+node_modules/
+bun.lock*
+
+# npm
+package-lock.json
+
+# db
+postgres/
+
+# env
+.env*
+!.env.example
+
+# misc
+seeds.txt
